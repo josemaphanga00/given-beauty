@@ -1,0 +1,690 @@
+/* ============================================================
+   DESIGN TOKENS: colours, light and dark themes. Edit colours here.
+   ============================================================ */
+
+:root {
+  --ink: #141414;
+  --char: #1f1f1f;
+  --grap: #2b2b2b;
+  --ondark: #f3ede1;
+  --gold: #c2a15f;
+  --bg: #f7f3ec;
+  --paper: #fff;
+  --text: #1c1a17;
+  --mute: #625b50;
+  --line: #ddd5c7;
+  --bronze: #7a5c1e;
+  --bb: #141414;
+  --bf: #f3ede1;
+  --err: #a3281f;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #181715;
+    --paper: #221f1c;
+    --text: #f1ebdf;
+    --mute: #b3aa9a;
+    --line: #3a362f;
+    --bronze: #d6b36a;
+    --bb: #f1ebdf;
+    --bf: #141414;
+    --err: #ff8f84;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #181715;
+  --paper: #221f1c;
+  --text: #f1ebdf;
+  --mute: #b3aa9a;
+  --line: #3a362f;
+  --bronze: #d6b36a;
+  --bb: #f1ebdf;
+  --bf: #141414;
+  --err: #ff8f84;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+/* ============================================================
+   BASE: resets, typography, links
+   ============================================================ */
+
+html {
+  scroll-padding-top: 5rem;
+  color-scheme: light dark;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    400 1rem/1.6 "DM Sans",
+    system-ui,
+    sans-serif;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--ink);
+  z-index: 30;
+}
+h1,
+h2,
+h3 {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+h1 {
+  font-size: clamp(2.6rem, 9vw, 5.6rem);
+}
+h2 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+}
+h3 {
+  font-size: 1.3rem;
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+/* ============================================================
+   LAYOUT: containers, banner, header and navigation
+   ============================================================ */
+
+.wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.mvp {
+  background: var(--gold);
+  color: #141414;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0.4rem 1rem;
+}
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: var(--ink);
+  color: var(--ondark);
+}
+header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.75rem;
+  gap: 1rem;
+}
+.mark {
+  font:
+    600 1.15rem Fraunces,
+    serif;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+nav {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+nav a,
+nav button {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.badge {
+  background: var(--gold);
+  color: #141414;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  display: inline-grid;
+  place-items: center;
+  margin-left: 0.4rem;
+}
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 1.6rem;
+  background: var(--bb);
+  color: var(--bf);
+  border: 1px solid var(--bb);
+  border-radius: 2px;
+  font:
+    500 1rem "DM Sans",
+    sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn.gold {
+  background: var(--gold);
+  color: #141414;
+  border-color: var(--gold);
+}
+.btn.ghost {
+  background: none;
+  color: inherit;
+  border-color: currentColor;
+}
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+/* ============================================================
+   HOME: hero, sections, grids
+   ============================================================ */
+
+.hero {
+  background: var(--ink);
+  color: var(--ondark);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 10vw, 7rem) 0;
+}
+.hero svg {
+  position: absolute;
+  right: -12%;
+  top: 50%;
+  width: min(80vw, 34rem);
+  transform: translateY(-50%);
+  opacity: 0.9;
+}
+.hero .wrap {
+  position: relative;
+}
+.hero p {
+  max-width: 30rem;
+  font-size: 1.15rem;
+  color: #d9d1c1;
+}
+.sec {
+  padding: clamp(3rem, 8vw, 5.5rem) 0;
+}
+.dark {
+  background: var(--char);
+  color: var(--ondark);
+}
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.feat {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .feat {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+  .feat .big {
+    grid-row: span 2;
+  }
+}
+/* ============================================================
+   PRODUCT CARDS
+   ============================================================ */
+
+.card {
+  background: var(--paper);
+  text-decoration: none;
+  display: block;
+  border: 1px solid var(--line);
+}
+.card .art {
+  aspect-ratio: 4/5;
+}
+.big .art {
+  aspect-ratio: auto;
+  height: calc(100% - 6.2rem);
+  min-height: 18rem;
+}
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.info {
+  padding: 1rem 1.1rem;
+}
+.mat {
+  font-size: 0.85rem;
+  color: var(--bronze);
+  font-weight: 500;
+}
+.price {
+  font-weight: 700;
+}
+/* ============================================================
+   PRODUCT PAGE and shared two-column layout
+   ============================================================ */
+
+.two {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 800px) {
+  .two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* ============================================================
+   BAG AND CHECKOUT: quantity, lines, forms, notes
+   ============================================================ */
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+}
+.qty button {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.qty output {
+  min-width: 2rem;
+  text-align: center;
+}
+.link {
+  background: none;
+  border: 0;
+  color: var(--bronze);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  min-height: 44px;
+}
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.5rem;
+  margin: 1.5rem 0;
+}
+dt {
+  color: var(--mute);
+}
+dd {
+  margin: 0;
+}
+.line {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.tot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+label {
+  display: block;
+  font-weight: 500;
+  margin: 1rem 0 0.3rem;
+}
+input,
+textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.6rem 0.8rem;
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--mute);
+  border-radius: 2px;
+  font: inherit;
+}
+.help {
+  font-size: 0.85rem;
+  color: var(--mute);
+}
+.ref {
+  font:
+    600 clamp(1.8rem, 7vw, 3rem) Fraunces,
+    serif;
+  letter-spacing: 0.06em;
+  color: var(--bronze);
+}
+.note {
+  border-left: 3px solid var(--gold);
+  padding: 0.6rem 1rem;
+  background: var(--paper);
+  margin: 1rem 0;
+}
+/* ============================================================
+   BAG DRAWER
+   ============================================================ */
+
+dialog {
+  margin: 0 0 0 auto;
+  height: 100%;
+  max-height: none;
+  width: min(26rem, 100%);
+  border: 0;
+  padding: 1.25rem;
+  background: var(--bg);
+  color: var(--text);
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer {
+  background: var(--ink);
+  color: #d9d1c1;
+  padding: 2.5rem 0;
+}
+footer a {
+  color: var(--gold);
+}
+.ring {
+  display: block;
+}
+.sr {
+  position: absolute;
+  left: -9999px;
+}
+/* ============================================================
+   PRINT and REDUCED MOTION
+   ============================================================ */
+
+@media print {
+  header,
+  footer,
+  .mvp,
+  .noprint {
+    display: none !important;
+  }
+  body::before {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   SAMPLE PHOTOS (MVP): product photos, hero and story images
+   ============================================================ */
+
+img {
+  max-width: 100%;
+}
+
+/* Product photos fill the frame and keep their focal point (set per product in app.js) */
+.art {
+  position: relative;
+  overflow: hidden;
+  background: var(--grap);
+}
+
+.art .photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .photo {
+  transform: scale(1.04);
+}
+
+/* Small label so sample photos are never mistaken for real product photos */
+.art:has(.photo)::after {
+  content: "Sample image";
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  z-index: 2;
+  padding: 0.15rem 0.5rem;
+  background: rgba(20, 20, 20, 0.75);
+  color: #f3ede1;
+  font-size: 0.75rem;
+}
+
+/* Hero: full-bleed photo with a dark fade so the headline stays readable */
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(20, 20, 20, 0.92) 0%,
+    rgba(20, 20, 20, 0.7) 45%,
+    rgba(20, 20, 20, 0.25) 100%
+  );
+}
+
+.hero svg {
+  z-index: 1;
+}
+
+.hero .wrap {
+  z-index: 2;
+}
+
+@media (max-width: 700px) {
+  .hero::before {
+    background: rgba(20, 20, 20, 0.72);
+  }
+}
+
+/* Story photo */
+.story-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 25%;
+  margin-bottom: 1.25rem;
+}
+
+/* ============================================================
+   PRODUCT GALLERY and LIGHTBOX
+   ============================================================ */
+
+/* Big view */
+.stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: var(--grap);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.stage .frame {
+  position: absolute;
+  inset: 0;
+}
+
+.stage .hint {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(20, 20, 20, 0.78);
+  color: #f3ede1;
+  font-size: 0.8rem;
+}
+
+/* Thumbnails */
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.thumb {
+  padding: 0;
+  background: none;
+  border: 2px solid var(--line);
+  color: inherit;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.thumb .frame {
+  aspect-ratio: 1;
+  background: var(--grap);
+}
+
+.thumb[aria-pressed="true"] {
+  border-color: var(--gold);
+}
+
+/* Lightbox */
+#lightbox {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  padding: 0;
+  background: rgba(10, 10, 10, 0.96);
+  color: #f3ede1;
+}
+
+#lightbox[open] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.lb-close {
+  grid-column: 1 / -1;
+  justify-self: end;
+  margin: 1rem;
+}
+
+#lightbox figure {
+  margin: 0;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.lb-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+.lb-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#lightbox figcaption {
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.lb-nav {
+  width: 52px;
+  height: 52px;
+  margin: 0 0.5rem;
+  background: none;
+  border: 1px solid #f3ede1;
+  border-radius: 50%;
+  color: #f3ede1;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* ============================================================
+   PRODUCT PHOTOS IN THE BAG, CHECKOUT AND THANK-YOU PAGE
+   ============================================================ */
+
+.line-img {
+  grid-row: span 2;
+  width: 72px;
+  height: 90px;
+  object-fit: cover;
+  background: var(--grap);
+}

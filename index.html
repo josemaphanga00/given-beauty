@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Given Beauty (MVP preview)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="mvp">
+      MVP preview: sample products, prices and details. Nothing here is real or
+      final.
+    </div>
+    <header>
+      <div class="wrap">
+        <a class="mark" href="#/">GIVEN BEAUTY</a>
+        <nav aria-label="Main">
+          <a href="#/shop">Shop</a><a href="#/#story">Story</a
+          ><button data-open aria-haspopup="dialog">
+            Bag<span class="badge" id="cnt">0</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+    <main id="app"></main>
+    <div class="sr" aria-live="polite" id="live"></div>
+    <dialog id="bag" aria-labelledby="bt">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <h2 id="bt" style="margin: 0">Your bag</h2>
+        <button class="link" data-close>Close</button>
+      </div>
+      <div id="bagBody"></div>
+    </dialog>
+    <dialog id="lightbox" aria-label="Product photo viewer">
+      <button class="lb-close btn ghost" data-lb="close">Close</button>
+      <button class="lb-nav" data-lb="prev" aria-label="Previous view">
+        ‹
+      </button>
+      <figure>
+        <div class="lb-stage"><img id="lbImg" alt="" /></div>
+        <figcaption id="lbCap"></figcaption>
+      </figure>
+      <button class="lb-nav" data-lb="next" aria-label="Next view">›</button>
+    </dialog>
+
+    <!-- Home page photos. In file names, write "#" as %23 and "%" as %25. -->
+    <template id="site-images">
+      <img
+        id="hero-img"
+        class="hero-img"
+        src="assets/Фон волосы.jpeg"
+        alt=""
+        fetchpriority="high"
+      />
+      <img
+        id="story-img"
+        class="story-img"
+        src="assets/90 Stock Photos for Beauty Blogs &amp; Hair Stylists – Melanin AI Models.jpeg"
+        alt="Sample styled image"
+      />
+    </template>
+
+    <!-- ============================================================
+         PRODUCT CATALOGUE
+         One <article> per wig. Each <img> is one view in its gallery.
+         Edit names, prices and photos here. app.js only reads this.
+         In file names, write "#" as %23 and "%" as %25.
+         ============================================================ -->
+    <template id="catalogue">
+      <article
+        data-id="ivy"
+        data-name="Ivy Bob"
+        data-material="High-grade fibre"
+        data-length="12 in"
+        data-price="899"
+        data-colours="#2b2b2b,#141414"
+      >
+        <p>
+          A sleek, face-framing bob that goes from desk to dinner without a
+          second thought.
+        </p>
+        <img
+          src="assets/straight-bundles.jpeg"
+          alt="Ivy Bob, front view"
+          data-label="Front view"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/straight-bundles.jpeg"
+          alt="Ivy Bob, full view"
+          data-label="Full view"
+          data-pos="center 30%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/straight-bundles.jpeg"
+          alt="Ivy Bob, close up"
+          data-label="Close up"
+          data-pos="center 30%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/90 Stock Photos for Beauty Blogs &amp; Hair Stylists – Melanin AI Models.jpeg"
+          alt="Ivy Bob, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/UPGRADE YOUR STYLE WITH OUR LONG-LASTING SILKY HAIR EXTENSIONS FOR A SLEEK, NATURAL FINISH!.jpeg"
+          alt="Ivy Bob, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Ivy Bob, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 35%"
+        />
+      </article>
+      <article
+        data-id="silk"
+        data-name="Silk Wave"
+        data-material="Blended fibre and human hair"
+        data-length="22 in"
+        data-price="1299"
+        data-colours="#6b4a2b,#2a1c10"
+      >
+        <p>Long, loose waves with movement that holds through the day.</p>
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Silk Wave, front view"
+          data-label="Front view"
+          data-pos="center 20%"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Silk Wave, full view"
+          data-label="Full view"
+          data-pos="center 20%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Silk Wave, close up"
+          data-label="Close up"
+          data-pos="center 20%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/Hairstyles Quick Weave.jpeg"
+          alt="Silk Wave, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Silk Wave, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Silk Wave, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 35%"
+        />
+      </article>
+      <article
+        data-id="honey"
+        data-name="Honey Curl"
+        data-material="High-grade fibre"
+        data-length="16 in"
+        data-price=""
+        data-colours="#b98b4e,#5e3f1d"
+      >
+        <p>Soft, bouncy curls. Price still to be confirmed.</p>
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Honey Curl, front view"
+          data-label="Front view"
+          data-pos="center 25%"
+        />
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Honey Curl, full view"
+          data-label="Full view"
+          data-pos="center 25%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Honey Curl, close up"
+          data-label="Close up"
+          data-pos="center 25%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Honey Curl, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Honey Curl, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 25%"
+        />
+        <img
+          src="assets/Hairstyles Quick Weave.jpeg"
+          alt="Honey Curl, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 40%"
+        />
+      </article>
+      <article
+        data-id="mid"
+        data-name="Midnight Straight"
+        data-material="Blended fibre and human hair"
+        data-length="26 in"
+        data-price="1499"
+        data-colours="#1a1a1f,#050507"
+      >
+        <p>Pin-straight length with a natural-looking shine.</p>
+        <img
+          src="assets/UPGRADE YOUR STYLE WITH OUR LONG-LASTING SILKY HAIR EXTENSIONS FOR A SLEEK, NATURAL FINISH!.jpeg"
+          alt="Midnight Straight, front view"
+          data-label="Front view"
+          data-pos="center 20%"
+        />
+        <img
+          src="assets/UPGRADE YOUR STYLE WITH OUR LONG-LASTING SILKY HAIR EXTENSIONS FOR A SLEEK, NATURAL FINISH!.jpeg"
+          alt="Midnight Straight, full view"
+          data-label="Full view"
+          data-pos="center 20%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/UPGRADE YOUR STYLE WITH OUR LONG-LASTING SILKY HAIR EXTENSIONS FOR A SLEEK, NATURAL FINISH!.jpeg"
+          alt="Midnight Straight, close up"
+          data-label="Close up"
+          data-pos="center 20%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/90 Stock Photos for Beauty Blogs &amp; Hair Stylists – Melanin AI Models.jpeg"
+          alt="Midnight Straight, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/straight-bundles.jpeg"
+          alt="Midnight Straight, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Midnight Straight, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 35%"
+        />
+      </article>
+      <article
+        data-id="amber"
+        data-name="Amber Layers"
+        data-material="High-grade fibre"
+        data-length="18 in"
+        data-price="999"
+        data-colours="#8a4b2a,#3a1d10"
+      >
+        <p>Feathered layers that sit light and move easily.</p>
+        <img
+          src="assets/Hairstyles Quick Weave.jpeg"
+          alt="Amber Layers, front view"
+          data-label="Front view"
+          data-pos="center 25%"
+        />
+        <img
+          src="assets/Hairstyles Quick Weave.jpeg"
+          alt="Amber Layers, full view"
+          data-label="Full view"
+          data-pos="center 25%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/Hairstyles Quick Weave.jpeg"
+          alt="Amber Layers, close up"
+          data-label="Close up"
+          data-pos="center 25%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Amber Layers, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Amber Layers, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/UPGRADE YOUR STYLE WITH OUR LONG-LASTING SILKY HAIR EXTENSIONS FOR A SLEEK, NATURAL FINISH!.jpeg"
+          alt="Amber Layers, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 40%"
+        />
+      </article>
+      <article
+        data-id="coil"
+        data-name="Coil Crown"
+        data-material="Blended fibre and human hair"
+        data-length="14 in"
+        data-price="1199"
+        data-colours="#3b2a22,#120c09"
+      >
+        <p>Defined coils with volume that frames the face.</p>
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Coil Crown, front view"
+          data-label="Front view"
+          data-pos="center 30%"
+        />
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Coil Crown, full view"
+          data-label="Full view"
+          data-pos="center 30%"
+          data-fit="contain"
+        />
+        <img
+          src="assets/Color 4 bundles and closure.jpeg"
+          alt="Coil Crown, close up"
+          data-label="Close up"
+          data-pos="center 30%"
+          data-zoom="2.2"
+        />
+        <img
+          src="assets/%234_27 highlights natural look wave.jpeg"
+          alt="Coil Crown, on model (sample)"
+          data-label="On model (sample)"
+        />
+        <img
+          src="assets/36 Inch Chocolate Brown Deep Wave Lace Front Wigs Human Hair 250 Density 13x6 HD Lace Frontal Wig 100%25 Brazilian Virgin Curly Human Hair Wig Pre Plucked Wet And Wavy Human Hair Wigs For Women Colored Brown Glueless Wig With Natural HairlineI discover.jpeg"
+          alt="Coil Crown, side view (sample)"
+          data-label="Side view (sample)"
+          data-pos="center 25%"
+        />
+        <img
+          src="assets/straight-bundles.jpeg"
+          alt="Coil Crown, back view (sample)"
+          data-label="Back view (sample)"
+          data-pos="center 35%"
+        />
+      </article>
+    </template>
+
+    <footer>
+      <div class="wrap">
+        <p class="mark" style="color: var(--ondark)">GIVEN BEAUTY</p>
+        <p>Beauty, Given. Accessibly Luxurious Hair.</p>
+        <p>
+          Email: <a href="mailto:placeholder@gmail.com">placeholder@gmail.com</a
+          ><br />WhatsApp: +27 12 345 6789<br />Instagram: @placeholder
+        </p>
+        <p class="help" style="color: #b3aa9a">
+          Logo shown as a text placeholder until the final logo file is
+          supplied. Delivery, returns and privacy policies to be confirmed.
+        </p>
+      </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
